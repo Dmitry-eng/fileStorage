@@ -1,0 +1,54 @@
+<!doctype html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/registration/validRegistration.js}"></script>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <form method="post" name="registration">
+
+        <div class=" col-12 col-md-3 mb-2 mb-md-0">
+            <p class="font-weight-bolder">Регистрация.</p>
+            <div class="form-group">
+                <label for="name">Ваше имя</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" id="name" placeholder="name"> <span
+                    id="messageValidName"></span>
+            </div>
+            <div class="form-group">
+                <label for="login">Ваш логин</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" id="login" placeholder="login"> <span
+                    id="messageValidLogin"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Ваш пароль</label>
+                <input type="password" class="form-control mb-2 mr-sm-2" id="password" placeholder="password"> <span
+                    id="messageValidPassword"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Ваш адрес электронной почты </label>
+                <input type="text" class="form-control mb-2 mr-sm-2" id="email" placeholder="email"> <span
+                    id="messageValidEmail"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" id="vEmail" class="btn btn-primary" value="Подтвердить почту"> <span
+                    id="messageValidForm"></span>
+            </div>
+            <div id="verification"></div>
+        </div>
+        </div>
+    </form>
+
+
+</head>
+<body>
+
+
+</body>
+</html>
