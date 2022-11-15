@@ -7,22 +7,24 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/file/addFile.js}"></script>
 </head>
 <body>
-<form method="POST" enctype="multipart/form-data" action="/file">
+<!--<form method="POST" enctype="multipart/form-data" action="/file/load">-->
+<form id="loadFile">
     <div class=" col-12 col-md-3 mb-2 mb-md-0">
         <p class="font-weight-bolder">Загрузка файла.</p>
         <div class="form-group">
             <label>Выберите файл для загрузки:</label>
-            <input type="file" class="form-control-file" name="file" placeholder="file">
+            <input type="file" class="form-control-file" name="file">
         </div>
         <div class="form-group">
             <label>Название файла</label>
-            <input type="text" class="form-control mb-2 mr-sm-2" name="name" placeholder="name">
+            <input type="text" class="form-control mb-2 mr-sm-2" name="name">
         </div>
         <div class="form-group">
             <label>Описание файла: </label>
-            <input type="text" class="form-control mb-2 mr-sm-2" name="info" placeholder="info">
+            <input type="text" class="form-control mb-2 mr-sm-2" name="info">
         </div>
         <div class="form-group">
             <label>Общий доступ: </label>
@@ -30,7 +32,7 @@
         </div>
         <div class="form-group">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <input type="submit" onclick="window.location.href='/'" class="btn btn-primary" value="Загрузить">
+            <input type="submit" id="buttonLoad" class="btn btn-primary" value="Загрузить">
         </div>
     </div>
 </form>

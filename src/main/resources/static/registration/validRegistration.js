@@ -1,12 +1,12 @@
 $(document).ready(function () {
 
-    $(function () {
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-        $(document).ajaxSend(function(e, xhr, options) {
-            xhr.setRequestHeader(header, token);
+        $(function () {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader(header, token);
+            });
         });
-    });
 
         $('#password').blur(function () {
             validPasswordForm();
@@ -34,9 +34,17 @@ $(document).ready(function () {
                 $("#messageValidForm").text("Проверьте правильность заполнения формы");
                 return;
             } else $("#messageValidForm").text("");
+            var account = new Object();
+            account.name = $("#name").val();
+            account.login = $("#login").val();
+            account.passwordConfirm = $("#password").val();
+            account.email = $("#email").val();
             $.ajax({
-                type: "PUT",
-                url: '/reg/sendEmail/' + $("#email").val(),
+                type: "POST",
+                contentType: "application/json",
+                dataType: 'JSON',
+                data: JSON.stringify(account),
+                url: '/reg/account/',
             });
 
             $(this).attr('disabled', true);
@@ -53,17 +61,27 @@ $(document).ready(function () {
         });
         $(document).on('click', '#send', function () {
             event.preventDefault();
+
             $.ajax({
+
+                statusCode: {
+                    400: function (xhr) {
+                        if ("INCORRECT_CODE" === JSON.parse(xhr.responseText).code) {
+                            $('#result').text("Не верный код подтверждения");
+                        }
+                    },
+                    201: function (xhr) {
+                        window.location.href = '/';
+                    }
+                },
                 type: "POST",
-                url: '/reg/send/' + $("#name").val() + '/' + $("#login").val() + '/' + $("#password").val() + '/' + $("#email").val() + '/' + $("#number").val(),
+                contentType: "application/json",
+                dataType: 'JSON',
+                data: $("#number").val(),
+                url: '/reg/code',
             }).then(function (data) {
-                if (data) window.location.href = '/';
-                else
-                    $('#result').text("Не верный код подтверждения");
-                // проработать автоматическое перенаправление на сервелет в случае правильного ввода кода подтверждея
             })
         });
-
 
     }
 );
@@ -83,21 +101,22 @@ function validNameForm() {
     } else $('#messageValidName').text("");
     return true;
 }
+
 function validLoginForm() {
     if ($('#login').val().replace(" ", "").length == 0) {
         $('#messageValidLogin').text("Поле не может быть пустым");
         return false;
     } else
-    $.ajax({
-        type: "PUT",
-        url: '/reg/login/'+ $('#login').val(),
-         }).done(function (data) {
-        if (data) {
-            $('#messageValidLogin').text("Логин свободный.");
-            bool= true;
-        } else $('#messageValidLogin').text("Логин занят.");
-            bool= false;
-    });
+        $.ajax({
+            type: "GET",
+            url: '/reg/login/' + $('#login').val(),
+        }).done(function (data) {
+            if (data) {
+                $('#messageValidLogin').text("Логин свободный.");
+                bool = true;
+            } else $('#messageValidLogin').text("Логин занят.");
+            bool = false;
+        });
     return bool;
 }
 
@@ -117,15 +136,15 @@ function validEmailForm() {
 
     $.ajax({
 
-        type: "PUT",
+        type: "GET",
         url: '/reg/email/' + $('#email').val()
     }).done(function (data) {
         if (data) {
             $('#messageValidEmail').text("Почта свободна");
-            bool= true;
+            bool = true;
         } else {
             $('#messageValidEmail').text("Почта занята.");
-            bool= false;
+            bool = false;
         }
     })
     return bool;

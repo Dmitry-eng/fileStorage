@@ -36,7 +36,7 @@ function Search(data) {
         $('tbody#show').append("    <tr id=\"show\">\n" +
             "        <th scope=\"row\">" + data[i].id + "</th>\n" +
             "        <td>" + data[i].group.name + "</td>\n" +
-            "        <td>" + data[i].user.name + "</td>\n" +
+            "        <td>" + data[i].account.name + "</td>\n" +
             "        <td>  <button type=\"button\" onclick='accept(" + data[i].id + ")' class=\"btn btn-success\">Принять</button>  </td>\n" +
             "        <td>  <button type=\"button\" onclick='reject(" + data[i].id + ")' class=\"btn btn-success\">Отклонить</button>  </td>\n" +
             "    </tr>");

@@ -28,7 +28,7 @@ function Search(data) {
         $('tbody#show').append("    <tr id=\"show\">\n" +
             "        <th scope=\"row\">" + data[i].id + "</th>\n" +
             "        <td>" + data[i].name + "</td>\n" +
-            "        <td>" + data[i].user.login + "</td>\n" +
+            "        <td>" + data[i].account.login + "</td>\n" +
             "        <td>  <button type=\"button\" onclick='deleteGroup(" + data[i].id + ")' class=\"btn btn-success\">Удалить</button>  </td>\n" +
             "    </tr>");
 
@@ -50,7 +50,7 @@ function deleteGroup(id) {
     $.ajax({
         type: "DELETE",
         dataType: 'JSON',
-        url: '/admin/deleteGroup/' + id,
+        url: '/admin/group/' + id,
     }).done(function (data) {
         list()
     })

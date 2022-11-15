@@ -5,9 +5,9 @@ $(document).ready(function () {
     window.onload = function () {
         event.preventDefault();
         $.ajax({
-            type: "PUT",
+            type: "GET",
             dataType: 'JSON',
-            url: '/list/search/myFile',
+            url: '/file/search/account',
         }).done(function (data) {
             Search(data);
         })
@@ -56,7 +56,7 @@ function Delete(number) {
     $.ajax({
         type: "DELETE",
         dataType: 'JSON',
-        url: '/list/delete/' + number,
+        url: '/file/delete/' + number,
     }).done(function (data) {
         list()
     })
@@ -66,9 +66,9 @@ function Delete(number) {
 function list() {
     event.preventDefault();
     $.ajax({
-        type: "PUT",
+        type: "GET",
         dataType: 'JSON',
-        url: '/list/search/myFile/' + $("#list").val(),
+        url: '/list/search/account/' + $("#list").val(),
     }).done(function (data) {
         Search(data);
     })

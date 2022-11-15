@@ -5,9 +5,9 @@ $(document).ready(function () {
     window.onload = function () {
         event.preventDefault();
         $.ajax({
-            type: "PUT",
+            type: "GET",
             dataType: 'JSON',
-            url: '/list/search/myFile',
+            url: '/file/search/account',
         }).done(function (data) {
             Search(data);
         })
@@ -62,9 +62,9 @@ function insert(id) {
 function list() {
     event.preventDefault();
     $.ajax({
-        type: "PUT",
+        type: "GET",
         dataType: 'JSON',
-        url: '/list/search/myFile/' + $("#list").val(),
+        url: '/file/search/account/' + $("#list").val(),
     }).done(function (data) {
         Search(data);
     })

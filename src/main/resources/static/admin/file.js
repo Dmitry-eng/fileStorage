@@ -30,7 +30,7 @@ function Search(data) {
             "        <td>" + data[i].name + "</td>\n" +
             "        <td>" + data[i].info + "</td>\n" +
             "        <td>" + data[i].data + "</td>\n" +
-            "        <td>" + data[i].user.login + "</td>\n" +
+            "        <td>" + data[i].account.login + "</td>\n" +
             "        <td>  <button type=\"button\" onclick='deleteFile(" + data[i].id + ")' class=\"btn btn-success\">Удалить</button>  </td>\n" +
             "    </tr>");
 
@@ -52,7 +52,7 @@ function deleteFile(id) {
     $.ajax({
         type: "DELETE",
         dataType: 'JSON',
-        url: '/admin/deleteFile/' + id,
+        url: '/admin/file/' + id,
     }).done(function (data) {
         list()
     })

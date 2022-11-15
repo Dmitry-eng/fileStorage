@@ -5,9 +5,9 @@ $(document).ready(function () {
     window.onload = function () {
         event.preventDefault();
         $.ajax({
-            type: "PUT",
+            type: "GET",
             dataType: 'JSON',
-            url: '/group/list/',
+            url: '/group/search/',
         }).done(function (data) {
             Search(data);
         })
@@ -24,9 +24,9 @@ $(document).ready(function () {
     $('#search').click(function () {
         event.preventDefault();
         $.ajax({
-            type: "PUT",
+            type: 'GET',
             dataType: 'JSON',
-            url: '/group/list/'+ $("#list").val(),
+            url: '/group/search/'+ $("#list").val(),
         }).done(function (data) {
             Search(data);
         })
@@ -42,7 +42,7 @@ function Search(data) {
         $('tbody#show').append("    <tr id=\"show\">\n" +
             "        <th scope=\"row\">" + data[i].id + "</th>\n" +
             "        <td>" + data[i].name + "</td>\n" +
-            "        <td>" +data[i].user.login + "</td>\n" +
+            "        <td>" +data[i].account.login + "</td>\n" +
             "        <td>" +show(data[i].id, data[i].access) + "</td>\n" +
             "    </tr>");
 
@@ -63,4 +63,4 @@ function invite(id) {
             url: '/group/request/'+ id,
         }).done(function (data) {
         })
-}
+} 

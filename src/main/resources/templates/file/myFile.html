@@ -7,7 +7,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/file/myFile.js}"></script>
-    <script type="text/javascript" th:src="@{/items/addFile.js}"></script>
+    <script type="text/javascript" th:src="@{/items/openFormAddFile.js}"></script>
+    <script type="text/javascript" th:src="@{/init.js}"></script>
+    <meta th:name="admin" th:content="${admin}"/>
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
@@ -31,8 +33,14 @@
         <input class="form-control mr-sm-2" type="text" id="list" placeholder="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" id="search" type="submit">Поиск</button>
         <button type="button" onclick="window.location.href='/myFile'" class="btn btn-outline-success">Мои файлы</button>
-        <button type="button" onclick="addFile()" class="btn btn-outline-success">Загрузить файл</button>
+        <button type="button" onclick="openFormAddFile()" class="btn btn-outline-success">Загрузить файл</button>
         <button type="button" onclick="window.location.href='/'" class="btn btn-outline-success">Все файлы</button>
+        <script>
+            $(document).ready(function(){
+                    buttonAdminInit();
+            });
+        </script>
+        <button type="button" onclick="window.location.href='/admin/files'" class="btn btn-outline-dark  admin-button">Админ</button>
     </form>
 </nav>
 

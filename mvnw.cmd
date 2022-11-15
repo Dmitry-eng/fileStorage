@@ -1,10 +1,10 @@
 @REM ----------------------------------------------------------------------------
 @REM Licensed to the Apache Software Foundation (ASF) under one
-@REM or more contributor license agreements.  See the NOTICE files
+@REM or more contributor license agreements.  See the NOTICE file
 @REM distributed with this work for additional information
-@REM regarding copyright ownership.  The ASF licenses this files
+@REM regarding copyright ownership.  The ASF licenses this file
 @REM to you under the Apache License, Version 2.0 (the
-@REM "License"); you may not use this files except in compliance
+@REM "License"); you may not use this file except in compliance
 @REM with the License.  You may obtain a copy of the License at
 @REM
 @REM    https://www.apache.org/licenses/LICENSE-2.0
@@ -30,7 +30,7 @@
 @REM MAVEN_OPTS - parameters passed to the Java VM when running Maven
 @REM     e.g. to debug Maven itself, use
 @REM set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
-@REM MAVEN_SKIP_RC - flag to disable loading of mavenrc files
+@REM MAVEN_SKIP_RC - flag to disable loading of mavenrc file
 @REM ----------------------------------------------------------------------------
 
 @REM Begin all REM lines with '@' in case MAVEN_BATCH_ECHO is 'on'
@@ -43,7 +43,7 @@ title %0
 @REM set %HOME% to equivalent of $HOME
 if "%HOME%" == "" (set "HOME=%HOMEDRIVE%%HOMEPATH%")
 
-@REM Execute a user defined script before this one
+@REM Execute a accountEntity defined script before this one
 if not "%MAVEN_SKIP_RC%" == "" goto skipRcPre
 @REM check for pre script, once with legacy .bat ending and once with .cmd ending
 if exist "%HOME%\mavenrc_pre.bat" call "%HOME%\mavenrc_pre.bat"

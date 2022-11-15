@@ -5,12 +5,13 @@ $(document).ready(function () {
     window.onload = function () {
         event.preventDefault();
         $.ajax({
-            type: "PUT",
+            type: "GET",
             dataType: 'JSON',
-            url: '/list/search/',
+            url: '/file/search/',
         }).done(function (data) {
             Search(data);
         })
+
     }
 
     $(function () {
@@ -22,11 +23,13 @@ $(document).ready(function () {
     });
 
     $('#search').click(function () {
+        var a = new Object();
+        a.p
         event.preventDefault();
         $.ajax({
-            type: "PUT",
+            type: "GET",
             dataType: 'JSON',
-            url: '/list/search/'+ $("#list").val(),
+            url: '/file/search/'+ $("#list").val(),
         }).done(function (data) {
             Search(data);
         })
@@ -44,8 +47,8 @@ function Search(data) {
             "        <td>" + data[i].name + "</td>\n" +
             "        <td>" + data[i].info + "</td>\n" +
             "        <td>"+data[i].data+"</td>\n" +
-            "        <td>" +data[i].user.login + "</td>\n" +
-            "        <td>  <button type=\"button\" onclick=\"window.location.href='/download/" + data[i].id + "'\" class=\"btn btn-success\">Скачать</button>  </td>\n" +
+            "        <td>" +data[i].account.login + "</td>\n" +
+            "        <td>  <button type=\"button\" onclick=\"window.location.href='/file/download/" + data[i].id + "'\" class=\"btn btn-success\">Скачать</button>  </td>\n" +
             "    </tr>");
 
     }

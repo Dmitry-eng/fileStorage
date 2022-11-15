@@ -29,8 +29,8 @@ function Search(data) {
             "        <td>" + data[i].name + "</td>\n" +
             "        <td>" + data[i].info + "</td>\n" +
             "        <td>"+data[i].data+"</td>\n" +
-            "        <td>" +data[i].user.login + "</td>\n" +
-            "        <td>  <button type=\"button\" onclick=\"window.location.href='/download/" + data[i].id + "'\" class=\"btn btn-success\">Скачать</button>  </td>\n" +
+            "        <td>" +data[i].account.login + "</td>\n" +
+            "        <td>  <button type=\"button\" onclick=\"window.location.href='/file/download/" + data[i].id + "'\" class=\"btn btn-success\">Скачать</button>  </td>\n" +
             getButtonRemoveFile( data[i].id) +
             "    </tr>");
 
@@ -52,10 +52,10 @@ function addFileGroup() {
     var righto = screen.availHeight/2-125;
     window.open("/addFileGroup/"+$("meta[name='groupId']").attr("content"), "INFO", "width=300, height=250, left=" + lefto + ", top="+righto+"");
 }
-function showUserGroup() {
+function showAccountGroup() {
     var lefto = screen.availWidth/2-150;
     var righto = screen.availHeight/2-125;
-    window.open("/showUserGroup/"+$("meta[name='groupId']").attr("content"), "INFO", "width=300, height=250, left=" + lefto + ", top="+righto+"");
+    window.open("/showAccountGroup/"+$("meta[name='groupId']").attr("content"), "INFO", "width=300, height=250, left=" + lefto + ", top="+righto+"");
 }
 function getButtonRemoveFile(id) {
     if ($("meta[name='groupLead']").attr("content") === "true") {
