@@ -73,6 +73,7 @@ public class ControllerPages {
         model.addAttribute("groupLead", group.getAccount().equals(accountSession.getAccount()));
         model.addAttribute("groupId", group.getId());
         model.addAttribute("groupName", group.getName());
+        model.addAttribute(ADMIN, isAdmin());
         return "group/showGroup";
     }
 

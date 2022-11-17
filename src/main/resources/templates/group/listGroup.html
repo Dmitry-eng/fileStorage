@@ -36,7 +36,12 @@
         <button type="button" onclick="window.location.href='/listGroup'" class="btn btn-outline-success">Все группы</button>
         <button type="button" onclick="addGroup()" class="btn btn-outline-success">Добавить группу</button>
         <button type="button" onclick="window.location.href='/request'" class="btn btn-outline-success">Запросы</button>
-        <button type="button" onclick="window.location.href='/admin/files'" class="btn btn-outline-dark  admin-button">Админ</button>
+        <script>
+            $(document).ready(function(){
+                buttonAdminInit();
+            });
+        </script>
+        <button type="button" onclick="window.location.href='/admin/files'"  class="btn btn-outline-dark  admin-button">Админ</button>
     </form>
 </nav>
 

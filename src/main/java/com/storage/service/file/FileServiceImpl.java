@@ -4,7 +4,7 @@ import com.storage.model.Account;
 import com.storage.model.File;
 import com.storage.repository.FileRepository;
 import com.storage.service.AccountSession;
-import com.storage.service.dto.FileDto;
+import com.storage.dto.FileDto;
 import com.storage.service.exception.FileCode;
 import com.storage.service.exception.FileException;
 import com.storage.service.exception.Security;

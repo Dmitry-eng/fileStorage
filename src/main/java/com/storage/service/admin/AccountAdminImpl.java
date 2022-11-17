@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class AccountAdminImpl implements AccountAdmin {
-    private final FileService fileService;
     private final AccountRepository accountRepository;
     private final FileRepository fileRepository;
 
@@ -32,7 +31,7 @@ public class AccountAdminImpl implements AccountAdmin {
     @Override
     public void delete(Long id) {
         Account account = accountRepository.getOne(id);
-        fileRepository.findAllByAccount(account).stream().map(File::getId).forEach(fileService::delete);
+        fileRepository.deleteByAccount(account);
         accountRepository.delete(account);
     }
 }

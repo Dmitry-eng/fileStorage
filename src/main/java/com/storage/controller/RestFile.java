@@ -1,7 +1,7 @@
 package com.storage.controller;
 
 import com.storage.model.File;
-import com.storage.service.dto.FileDto;
+import com.storage.dto.FileDto;
 import com.storage.service.file.FileService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;

@@ -1,16 +1,9 @@
 $(document).ready(function () {
     event.preventDefault();
 
-
     window.onload = function () {
         event.preventDefault();
-        $.ajax({
-            type: "GET",
-            dataType: 'JSON',
-            url: '/file/search/account',
-        }).done(function (data) {
-            Search(data);
-        })
+        list()
     }
 
     $(function () {
@@ -37,10 +30,10 @@ function Search(data) {
             "        <th scope=\"row\">" + data[i].id + "</th>\n" +
             "        <td>" + data[i].name + "</td>\n" +
             "        <td>" + data[i].info + "</td>\n" +
-            "        <td>" + data[i].data + "</td>\n" +
+            "        <td>" + data[i].date + "</td>\n" +
             "        <td>" + toString(data[i].open) + "</td>\n" +
             "        <td>  <button type=\"button\" onclick=\"window.location.href='/download/" + data[i].id + "'\" class=\"btn btn-success\">Скачать</button>  </td>\n" +
-            "        <td>  <button type=\"button\" onclick='Delete(" + data[i].id + ")' class=\"btn btn-success\">Удалить</button>  </td>\n" +
+            "        <td>  <button type=\"button\" onclick='Delete(" + data[i].id + ")'  class=\"btn btn-success\">Удалить</button>  </td>\n" +
             "    </tr>");
 
     }
@@ -54,10 +47,15 @@ function toString(tmp) {
 
 function Delete(number) {
     $.ajax({
+        statusCode: {
+            204: function (xhr) {
+               list()
+            }
+        },
         type: "DELETE",
         dataType: 'JSON',
         url: '/file/delete/' + number,
-    }).done(function (data) {
+    }).done(function () {
         list()
     })
 
@@ -68,7 +66,7 @@ function list() {
     $.ajax({
         type: "GET",
         dataType: 'JSON',
-        url: '/list/search/account/' + $("#list").val(),
+        url: '/file/search/account/' + $("#list").val(),
     }).done(function (data) {
         Search(data);
     })

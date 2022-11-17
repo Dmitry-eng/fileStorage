@@ -28,7 +28,7 @@ function Search(data) {
             "        <th scope=\"row\">" + data[i].id + "</th>\n" +
             "        <td>" + data[i].name + "</td>\n" +
             "        <td>" + data[i].info + "</td>\n" +
-            "        <td>"+data[i].data+"</td>\n" +
+            "        <td>"+data[i].date+"</td>\n" +
             "        <td>" +data[i].account.login + "</td>\n" +
             "        <td>  <button type=\"button\" onclick=\"window.location.href='/file/download/" + data[i].id + "'\" class=\"btn btn-success\">Скачать</button>  </td>\n" +
             getButtonRemoveFile( data[i].id) +

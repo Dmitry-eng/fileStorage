@@ -39,6 +39,6 @@ public interface FileRepository extends JpaRepository<File, Long> {
             "WHERE (file.open=true or file.account=:account or ga.account=:account) and (file.name like %:value% or " +
             "file.info like %:value%  or   CAST(file.id as text) = :value)")
     List<File> findAll(@Param(value = "account") Account account, @Param(value = "value") String value);
-}
 
-// Получить группу файла
+    void deleteByAccount(Account account);
+}

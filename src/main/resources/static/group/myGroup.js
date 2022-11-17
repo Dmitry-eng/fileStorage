@@ -30,8 +30,7 @@ function Search(data) {
             "        <td>" + data[i].name + "</td>\n" +
             "        <td>" +data[i].account.login + "</td>\n" +
             "        <td>  <button type=\"button\" onclick=\"window.location.href='/show/" + data[i].id + "'\" class=\"btn btn-success\">Перейти</button>  </td>\n" +
-          //  "        <td>  <button type=\"button\" onclick='leave("+data[i].id+")' class=\"btn btn-danger\">Покинуть группу</button>  </td>\n" +
-            buttonLeave(data[i].user.id, data[i].id ) +
+            buttonLeave(data[i].account.id, data[i].id ) +
             "    </tr>");
 
     }
@@ -39,11 +38,15 @@ function Search(data) {
 function leave(id) {
     event.preventDefault();
     $.ajax({
+        statusCode: {
+            200: function (xhr) {
+                list()
+            }
+        },
         type: "Delete",
         dataType: 'JSON',
         url: '/show/leave/'+ id,
-    }).done(function (data) {
-        list()
+    }).done(function () {
     })
 }
 function list() {
@@ -67,10 +70,14 @@ function buttonLeave(user, group) {
 function deleteGroup(group) {
     event.preventDefault();
     $.ajax({
+        statusCode: {
+            200: function (xhr) {
+                list()
+            }
+        },
         type: "DELETE",
         dataType: 'JSON',
         url: '/group/delete/'+ group,
-    }).done(function (data) {
-        list()
+    }).done(function () {
     })
 }

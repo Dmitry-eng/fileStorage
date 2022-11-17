@@ -1,7 +1,7 @@
 package com.storage.service.file;
 
 import com.storage.model.File;
-import com.storage.service.dto.FileDto;
+import com.storage.dto.FileDto;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;

@@ -45,22 +45,30 @@ function Search(data) {
 function accept(id) {
     event.preventDefault();
     $.ajax({
+        statusCode: {
+            200: function (xhr) {
+                list()
+            }
+        },
         type: "POST",
         dataType: 'JSON',
         url: '/request/accept/'+ id,
-    }).done(function (data) {
-       list()
+    }).done(function () {
     })
 }
 
 function reject(id) {
     event.preventDefault();
     $.ajax({
+        statusCode: {
+            200: function (xhr) {
+                list()
+            }
+        },
         type: "POST",
         dataType: 'JSON',
         url: '/request/reject/'+ id,
-    }).done(function (data) {
-        list()
+    }).done(function () {
     })
 }
 function list() {

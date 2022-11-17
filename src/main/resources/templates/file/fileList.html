@@ -19,7 +19,6 @@
     <form class="form-inline">
         <button type="button" onclick="window.location.href='/listGroup'" class="btn btn-outline-success">Группы</button>
         <button type="button" onclick="window.location.href='/'" class="btn btn-outline-success">Файлы</button>
-
     </form>
     <div class="d-flex ml-2">
         <form th:action="@{/logout}" method="post">
@@ -36,7 +35,12 @@
         <button type="button" onclick="window.location.href='/myFile'" class="btn btn-outline-success">Мои файлы</button>
         <button type="button" onclick="openFormAddFile()" class="btn btn-outline-success">Загрузить файл</button>
         <button type="button" onclick="window.location.href='/'" class="btn btn-outline-success">Все файлы</button>
-        <button type="button" onclick="window.location.href='/admin/files'" class="btn btn-outline-dark  admin-button">Админ</button>
+        <script>
+            $(document).ready(function(){
+                buttonAdminInit();
+            });
+        </script>
+        <button type="button" onclick="window.location.href='/admin/files'"  class="btn btn-outline-dark  admin-button">Админ</button>
     </form>
 </nav>
 

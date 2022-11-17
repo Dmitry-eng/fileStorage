@@ -8,10 +8,12 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/group/showGroup.js}"></script>
     <script type="text/javascript" th:src="@{/items/addGroup.js}"></script>
+    <script type="text/javascript" th:src="@{/init.js}"></script>
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta th:name="groupId" th:content="${groupId}">
     <meta th:name="groupLead" th:content="${groupLead}">
+    <meta th:name="admin" th:content="${admin}"/>
 </head>
 <body>
 
@@ -36,6 +38,12 @@
         <button type="button" onclick="window.location.href='/listGroup'" class="btn btn-outline-success">Все группы</button>
         <button type="button" onclick="addGroup()" class="btn btn-outline-success">Добавить группу</button>
         <button type="button" onclick="window.location.href='/request'" class="btn btn-outline-success">Запросы</button>
+        <script>
+            $(document).ready(function(){
+                buttonAdminInit();
+            });
+        </script>
+        <button type="button" onclick="window.location.href='/admin/files'"  class="btn btn-outline-dark  admin-button">Админ</button>
     </form>
 </nav>
 <nav class="navbar navbar-light bg-light">

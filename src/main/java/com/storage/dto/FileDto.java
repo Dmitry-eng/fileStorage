@@ -1,8 +1,6 @@
-package com.storage.service.dto;
-
+package com.storage.dto;
 
 import lombok.Data;
-
 
 @Data
 public class FileDto  {

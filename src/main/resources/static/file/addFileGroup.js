@@ -36,7 +36,7 @@ function Search(data) {
             "        <th scope=\"row\">" + data[i].id + "</th>\n" +
             "        <td>" + data[i].name + "</td>\n" +
             "        <td>" + data[i].info + "</td>\n" +
-            "        <td>" + data[i].data + "</td>\n" +
+            "        <td>" + data[i].date + "</td>\n" +
             "        <td>" + toString(data[i].open) + "</td>\n" +
             "        <td>  <button type=\"button\" onclick='insert(" + data[i].id + ")' class=\"btn btn-success\">Добавить</button>  </td>\n" +
             "    </tr>");
