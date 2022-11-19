@@ -4,6 +4,7 @@ import com.storage.model.Account;
 import com.storage.model.File;
 import com.storage.model.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FileRepository extends JpaRepository<File, Long> {
+public interface FileRepository extends JpaRepository<File, Long>, JpaSpecificationExecutor<Account> {
     @Query("SELECT fg.file FROM FileGroup fg " +
             "WHERE fg.group=:group")
     List<File> findAllByGroup(@Param(value = "group") Group group);
@@ -30,7 +31,7 @@ public interface FileRepository extends JpaRepository<File, Long> {
             "WHERE file.open=true or file.account=:account or ga.account=:account")
     List<File> findAll(@Param(value = "account") Account account);
 
-    @Query("SELECT file FROM File file WHERE file.name like %:value% or file.info like %:value% or CAST(file.id as text) = :value")
+    @Query("SELECT file FROM File file WHERE file.name like %:value% or file.info like %:value% or CAST(file.id as text) like %:value%")
     List<File> findAll(@Param(value = "value") String value);
 
     @Query("SELECT file FROM File file " +

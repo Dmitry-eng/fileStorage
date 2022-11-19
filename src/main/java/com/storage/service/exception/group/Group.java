@@ -1,4 +1,4 @@
-package com.storage.service.exception;
+package com.storage.service.exception.group;
 
 public enum Group {
     NAME_EMPTY,

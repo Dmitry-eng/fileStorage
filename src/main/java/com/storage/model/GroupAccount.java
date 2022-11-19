@@ -1,6 +1,7 @@
 package com.storage.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "group_account")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class GroupAccount extends StandardEntity {
@@ -24,9 +26,4 @@ public class GroupAccount extends StandardEntity {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Account account;
-
-    public GroupAccount(Account account, Group group) {
-        this.account = account;
-        this.group = group;
-    }
 }

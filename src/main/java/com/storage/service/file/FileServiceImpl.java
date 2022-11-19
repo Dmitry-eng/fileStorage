@@ -2,13 +2,16 @@ package com.storage.service.file;
 
 import com.storage.model.Account;
 import com.storage.model.File;
+import com.storage.model.FileGroup;
+import com.storage.model.Group;
 import com.storage.repository.FileRepository;
 import com.storage.service.AccountSession;
 import com.storage.dto.FileDto;
-import com.storage.service.exception.FileCode;
-import com.storage.service.exception.FileException;
-import com.storage.service.exception.Security;
-import com.storage.service.exception.SecurityException;
+import com.storage.service.exception.file.FileCode;
+import com.storage.service.exception.file.FileException;
+import com.storage.service.exception.security.Security;
+import com.storage.service.exception.security.SecurityException;
+import com.storage.service.group.GroupService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
@@ -32,6 +35,7 @@ public class FileServiceImpl implements FileService {
     private final FileRepository fileRepository;
     private final AccountSession accountSession;
     private final String directory;
+    private final GroupService groupService;
 
     @Override
     public final List<File> search() {
@@ -95,7 +99,8 @@ public class FileServiceImpl implements FileService {
         if (file.getOpen() || file.getAccount().equals(account) || accountSession.isAdmin()) {
             return;
         }
-        if (file.getFileGroupsListEntity().stream().noneMatch(fileGroup -> account.getGroups().contains(fileGroup.getGroup()))) {
+        List<Group> groups = groupService.findAllGroupAccessForAccount();
+        if (file.getFileGroupsListEntity().stream().map(FileGroup::getGroup).noneMatch(groups::contains)) {
             throw new SecurityException(Security.ACCESS_DENIED);
         }
     }

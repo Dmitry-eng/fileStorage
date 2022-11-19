@@ -9,15 +9,13 @@ import java.util.List;
 
 @Service
 public interface FilesGroup {
-    List<File> show(String id, String text);
+    List<File> show(Long id, String text);
 
-    List<File> show(String id);
+    List<File> show(Long id);
 
-    Group group(String id);
+    boolean leave(Long id);
 
-    boolean leave(String id);
-
-    boolean addFileGroup(String strFileId, String strGroupId);
+    boolean addFileGroup(Long fileId, Long groupId);
 
     List<Account> showAccountGroup(Long groupId);
 

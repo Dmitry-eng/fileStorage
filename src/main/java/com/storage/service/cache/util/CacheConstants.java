@@ -1,4 +1,4 @@
-package com.storage.service.util;
+package com.storage.service.cache.util;
 
 import lombok.experimental.UtilityClass;
 

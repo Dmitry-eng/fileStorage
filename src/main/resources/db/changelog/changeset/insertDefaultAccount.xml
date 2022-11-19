@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="table.account" value="account"/>
+    <property name="table.account_roles" value="account_roles"/>
+
+    <changeSet author="Dmitry Popov" id="insert default account">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM account WHERE login like 'admin' or name like 'admin';
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="${table.account}">
+            <column name="id" value="1"/>
+            <column name="activated" value="true"/>
+            <column name="email" value="-"/>
+            <column name="login" value="admin"/>
+            <column name="name" value="admin"/>
+            <column name="password" value="$2a$10$qqU3w05ZUOBZZ30Ju..u5uWRPudYF.8A6JwcBvNeccTqdAjXIybdy"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="Dmitry Popov" id="insert role for account">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="1">SELECT COUNT(*) FROM account WHERE login like 'admin' or name like 'admin';
+            </sqlCheck>
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM account_roles WHERE account_id = '1' and roles_id = '2';
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="${table.account_roles}">
+            <column name="account_id" value="1"/>
+            <column name="roles_id" value="2"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

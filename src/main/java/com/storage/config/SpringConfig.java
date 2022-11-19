@@ -4,7 +4,8 @@ import com.storage.repository.FileRepository;
 import com.storage.service.AccountSession;
 import com.storage.service.file.FileService;
 import com.storage.service.file.FileServiceImpl;
-import com.storage.service.util.CacheConstants;
+import com.storage.service.group.GroupService;
+import com.storage.service.cache.util.CacheConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
@@ -31,6 +32,8 @@ public class SpringConfig implements WebMvcConfigurer {
     private FileRepository fileRepository;
     @Autowired
     private AccountSession accountSession;
+    @Autowired
+    private GroupService groupService;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -63,10 +66,9 @@ public class SpringConfig implements WebMvcConfigurer {
         return new ConcurrentMapCacheManager(CacheConstants.CACHE_REGISTRATION_NAME);
     }
 
-
     @Bean
     public FileService fileService() {
-        return new FileServiceImpl(fileRepository, accountSession, directory);
+        return new FileServiceImpl(fileRepository, accountSession, directory, groupService);
     }
 
 }

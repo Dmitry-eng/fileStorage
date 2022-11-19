@@ -20,6 +20,10 @@ public class AccountSession {
         return auth.getName();
     }
 
+    public final void removeSession(){
+        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+    }
+
     public final Account getAccount() {
         return accountRepository.findByLogin(getAccountLogin());
     }

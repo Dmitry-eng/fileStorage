@@ -1,5 +1,6 @@
-package com.storage.service.exception;
+package com.storage.service.exception.file;
 
+import com.storage.service.exception.ServiceException;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

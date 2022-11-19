@@ -29,53 +29,39 @@ public class FilesGroupImpl implements FilesGroup {
     private final AccountRepository accountRepository;
 
     @Override
-    public List<File> show(String strId) {
-        try {
-            long id = Long.parseLong(strId);
+    public List<File> show(Long id) {
             Account account = accountSession.getAccount();
             Group group = groupRepository.getOne(id);
             if (!group.getAccount().equals(account)
                     && groupAccountRepository.countByGroupAndAccount(group, account) == 0) return null;
             return fileRepository.findAllByGroup(group);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     @Override
-    public List<File> show(String strId, String text) {
-        return Util.getFiles(text, show(strId));
+    public List<File> show(Long id, String text) {
+        return null;
+//        return Util.getFiles(text, show(strId));
     }
 
     @Override
-    public final Group group(String id) {
-        try {
-            return groupRepository.getOne(Long.parseLong(id));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public final boolean leave(Long strId) {
+        return true;
+//        try {
+//            groupAccountRepository.deleteByGroupAndAccount(
+//                    groupRepository.getOne(Long.parseLong(strId)),
+//                    accountSession.getAccount());
+//            return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return false;
     }
 
     @Override
-    public final boolean leave(String strId) {
-        try {
-            groupAccountRepository.deleteByGroupAndAccount(
-                    groupRepository.getOne(Long.parseLong(strId)),
-                    accountSession.getAccount());
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public final boolean addFileGroup(String fileId, String groupId) {
-        Group group = groupRepository.getOne(Long.parseLong(groupId));
+    public final boolean addFileGroup(Long fileId, Long groupId) {
+        Group group = groupRepository.getOne(groupId);
         Account account = accountSession.getAccount();
-        File file = fileRepository.getOne(Long.parseLong(fileId));
+        File file = fileRepository.getOne(fileId);
         GroupAccount groupAccount = groupAccountRepository.findByGroupAndAccount(group, account);
         if (group.getAccount().equals(account) || groupAccount != null) {
             if (fileGroupRepository.findAllByFileAndGroup(file, group).size() != 0) return false;

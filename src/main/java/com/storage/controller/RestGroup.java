@@ -31,13 +31,13 @@ public class RestGroup {
     }
 
     @GetMapping("search/account")
-    public List<Group> findAllByAccount() {
-        return groupService.findAllByAccount();
+    public List<Group> findAllGroupAccessForAccount() {
+        return groupService.findAllGroupAccessForAccount();
     }
 
     @GetMapping("search/account/{string}")
-    public List<Group> findAllByAccount(@PathVariable String string) {
-        return groupService.findAllByAccount(string);
+    public List<Group> findAllGroupAccessForAccount(@PathVariable String string) {
+        return groupService.findAllGroupAccessForAccount(string);
     }
 
     @PostMapping("/add")

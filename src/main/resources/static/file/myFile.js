@@ -32,7 +32,7 @@ function Search(data) {
             "        <td>" + data[i].info + "</td>\n" +
             "        <td>" + data[i].date + "</td>\n" +
             "        <td>" + toString(data[i].open) + "</td>\n" +
-            "        <td>  <button type=\"button\" onclick=\"window.location.href='/download/" + data[i].id + "'\" class=\"btn btn-success\">Скачать</button>  </td>\n" +
+            "        <td>  <button type=\"button\" onclick=\"window.location.href='file/download/" + data[i].id + "'\" class=\"btn btn-success\">Скачать</button>  </td>\n" +
             "        <td>  <button type=\"button\" onclick='Delete(" + data[i].id + ")'  class=\"btn btn-success\">Удалить</button>  </td>\n" +
             "    </tr>");
 

@@ -2,9 +2,7 @@ package com.storage.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +17,8 @@ import java.util.List;
 @Entity
 @Table(name = "\"group\"")
 @Data
+@ToString(exclude = {"fileGroups", "groupAccounts", "groupAccounts"})
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Group extends StandardEntity {

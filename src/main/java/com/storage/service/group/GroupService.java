@@ -8,15 +8,17 @@ import java.util.List;
 public interface GroupService {
     List<Group> findAll();
 
-    List<Group> findAllByAccount();
+    List<Group> findAllGroupAccessForAccount();
 
     List<Group> findAll(String string);
 
-    List<Group> findAllByAccount(String string);
+    List<Group> findAllGroupAccessForAccount(String string);
 
     void add(String string);
 
     void delete(Long id);
+
+    Group getById(Long id);
 
     void sendRequestToJoinInGroup(Long id);
 

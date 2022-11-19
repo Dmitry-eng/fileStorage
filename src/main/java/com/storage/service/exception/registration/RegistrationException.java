@@ -1,5 +1,6 @@
-package com.storage.service.exception;
+package com.storage.service.exception.registration;
 
+import com.storage.service.exception.ServiceException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

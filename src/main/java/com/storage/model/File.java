@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.CascadeType;
@@ -21,6 +22,7 @@ import java.util.List;
 @Entity
 @Table(name = "file")
 @Data
+@ToString(exclude = {"fileGroupsListEntity"})
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @FieldNameConstants
@@ -49,12 +51,4 @@ public class File extends StandardEntity {
     @OneToMany(mappedBy = "file", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FileGroup> fileGroupsListEntity;
 
-    public File(String name, String info, Date date, Account account, String location, Boolean open){
-            this.name=name;
-            this.info=info;
-            this.date=date;
-            this.account = account;
-            this.location=location;
-            this.open=open;
-    }
 }

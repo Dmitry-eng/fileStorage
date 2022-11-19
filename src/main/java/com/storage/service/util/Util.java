@@ -14,16 +14,6 @@ import java.util.List;
 @Deprecated
 public class Util {
 
-    public static List<File> getFiles(String str, List<File> files) {
-        List<File> tmp = new ArrayList<>();
-        for (File file : files) {
-            if (file.getName().toLowerCase().contains(str.toLowerCase()) || file.getInfo().toLowerCase().contains(str.toLowerCase()) || file.getId().toString().equals(str) || file.getDate().toString().contains(str) || file.getAccount().getLogin().toLowerCase().contains(str.toLowerCase())) {
-                tmp.add(file);
-            }
-        }
-        return tmp;
-    }
-
     public static List<Account> getUser(String str, List<Account> account) {
         List<Account> tmp = new ArrayList<>();
         for (Account u : account) {
@@ -42,13 +32,4 @@ public class Util {
         }
         return tmp;
     }
-     public static List<Request> getRequest(String string, List<Request> requests) {
-        List<Request> tmp = new ArrayList<>();
-        for (Request request : requests) {
-            if (request.getGroup().getName().contains(string) || request.getAccount().getName().contains(string))
-                tmp.add(request);
-        }
-        return tmp;
-    }
-
 }

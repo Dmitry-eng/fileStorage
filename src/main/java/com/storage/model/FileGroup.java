@@ -1,5 +1,6 @@
 package com.storage.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "file_group")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class FileGroup extends StandardEntity {
@@ -24,9 +26,4 @@ public class FileGroup extends StandardEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Group group;
-
-    public FileGroup(File file, Group group){
-        this.file= file;
-        this.group = group;
-    }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MailSenderImpl implements MailSender {
+    // TODO refactor required
     private final JavaMailSender javaMailSender;
 
     public MailSenderImpl(@Autowired JavaMailSender javaMailSender) {

@@ -1,17 +1,14 @@
 package com.storage.service.account;
 
 import com.storage.model.Account;
-import com.storage.model.Role;
 import com.storage.repository.AccountRepository;
 import com.storage.repository.RoleRepository;
-import com.storage.service.AccountSession;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +16,6 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder encoder;
-    private final AccountSession accountSession;
 
     @Override
     public void create(Account account) {

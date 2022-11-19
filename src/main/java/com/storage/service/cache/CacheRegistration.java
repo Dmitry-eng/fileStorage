@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
-import static com.storage.service.util.CacheConstants.CACHE_REGISTRATION_NAME;
+import static com.storage.service.cache.util.CacheConstants.CACHE_REGISTRATION_NAME;
 
 @Component
 @AllArgsConstructor
