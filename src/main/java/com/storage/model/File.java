@@ -2,19 +2,14 @@ package com.storage.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
@@ -22,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "file")
 @Data
-@ToString(exclude = {"fileGroupsListEntity"})
+@ToString(exclude = {"groups"})
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @FieldNameConstants
@@ -47,8 +42,16 @@ public class File extends StandardEntity {
     @Column(nullable = false)
     private Boolean open;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "file", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FileGroup> fileGroupsListEntity;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "file", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<FileGroup> fileGroupsListEntity;
 
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "file_group",
+            joinColumns = @JoinColumn(name = "file_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id")
+    )
+    private List<Group> groups;
 }

@@ -1,16 +1,15 @@
 package com.storage.service.group;
 
-import com.storage.model.Account;
-import com.storage.model.Group;
-import com.storage.model.GroupAccount;
-import com.storage.model.Request;
+import com.storage.model.*;
+import com.storage.repository.FileRepository;
 import com.storage.repository.GroupRepository;
-import com.storage.repository.GroupAccountRepository;
+//import com.storage.repository.GroupAccountRepository;
 import com.storage.repository.RequestRepository;
 import com.storage.service.AccountSession;
 import com.storage.service.exception.group.GroupException;
 import com.storage.service.exception.security.Security;
 import com.storage.service.exception.security.SecurityException;
+import liquibase.pro.packaged.L;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -28,15 +27,34 @@ public class GroupServiceImpl implements GroupService {
     private static final String LIKE = "%%%s%%";
     private final AccountSession accountSession;
     private final GroupRepository groupRepository;
-    private final GroupAccountRepository groupAccountRepository;
+    //    private final GroupAccountRepository groupAccountRepository;
     private final RequestRepository requestRepository;
+    private final FileRepository fileRepository;
 
     @Override
-    public final List<Group> findAll() {
-        List<Group> groupAccounts = groupRepository.findAllGroupAccessForAccount(accountSession.getAccount());
+    public List<Group> findAll() {
+        List<Group> groups = groupRepository.findAllByAccountsContaining(accountSession.getAccount());
         return groupRepository.findAll().stream().peek(group -> {
-            if (groupAccounts.contains(group)) {
-                group.setAccess(true);
+            if (groups.contains(group) || group.getAccount().equals(accountSession.getAccount())) {
+                group.setStatus(GroupStatus.IN_GROUP);
+            } else if(group.getRequests().stream().map(Request::getAccount).anyMatch(account -> account.equals(accountSession.getAccount()))) {
+                group.setStatus(GroupStatus.REQUEST_SENT);
+            } else {
+                group.setStatus(GroupStatus.NOT_IN_GROUP);
+            }
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Group> findAll(String value) {
+        List<Group> groups = groupRepository.findAllByAccountsContaining(accountSession.getAccount());
+        return groupRepository.findAll(like(value)).stream().peek(group -> {
+            if (groups.contains(group) || group.getAccount().equals(accountSession.getAccount())) {
+                group.setStatus(GroupStatus.IN_GROUP);
+            } else if(group.getRequests().stream().map(Request::getAccount).anyMatch(account -> account.equals(accountSession.getAccount()))) {
+                group.setStatus(GroupStatus.REQUEST_SENT);
+            } else {
+                group.setStatus(GroupStatus.NOT_IN_GROUP);
             }
         }).collect(Collectors.toList());
     }
@@ -46,13 +64,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public final List<Group> findAll(String value) {
-        return groupRepository.findAll(like(value));
-    }
-
-    @Override
     public final List<Group> findAllGroupAccessForAccount(String value) {
-        return groupRepository.findAllGroupAccessForAccount(accountSession.getAccount(), value);
+        return groupRepository.findAllGroupAccessForAccount(accountSession.getAccount(), String.format(LIKE, value));
     }
 
     @Override
@@ -80,14 +93,32 @@ public class GroupServiceImpl implements GroupService {
     public Group getById(Long id) {
         Group group = groupRepository.getOne(id);
         checkAccessGetGroup(group);
-        return groupRepository.getOne(id);
+        return group;
+    }
+
+    @Override
+    public List<File> show(Long id) {
+        Group group = groupRepository.getOne(id);
+        checkAccessGetGroup(group);
+        return fileRepository.findAllByGroup(group);
+    }
+
+    @Override
+    public void addFileGroup(Long fileId, Long groupId) {
+        Group group = groupRepository.getOne(groupId);
+        File file = fileRepository.getOne(fileId);
+        checkAccessGetGroup(group);
+        group.getFiles().add(file);
+        groupRepository.save(group);
     }
 
     @Override
     public final void accept(Long id) {
         Request request = requestRepository.getOne(id);
         checkAccessAccount(request);
-        groupAccountRepository.save(new GroupAccount(request.getGroup(), request.getAccount()));
+        Group group = request.getGroup();
+        group.getAccounts().add(request.getAccount());
+        groupRepository.save(group);
         requestRepository.delete(request);
     }
 
@@ -115,17 +146,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
     private void checkAccessAccount(Request request) {
-        if (request.getGroup().getAccount().equals(accountSession.getAccount())) {
+        if (!request.getGroup().getAccount().equals(accountSession.getAccount())) {
             throw new SecurityException(Security.ACCESS_DENIED);
         }
     }
 
     private void checkAccessGetGroup(Group group) {
         Account account = accountSession.getAccount();
-        if (!group.getAccount().equals(accountSession.getAccount()) && group.getGroupAccounts().stream().map(GroupAccount::getAccount)
-                .noneMatch(account::equals)) {
-            throw new SecurityException(Security.ACCESS_DENIED);
-        }
+//        if (!group.getAccount().equals(accountSession.getAccount()) && group.getGroupAccounts().stream().map(GroupAccount::getAccount)
+//                .noneMatch(account::equals)) {
+//            throw new SecurityException(Security.ACCESS_DENIED);
+//        }
     }
 
     private void checkCreateGroup(String name) {
@@ -142,9 +173,9 @@ public class GroupServiceImpl implements GroupService {
             throw new GroupException(REQUEST_SEND_BEFORE);
         }
 
-        if (groupAccountRepository.findByGroupAndAccount(group, account) != null) {
-            throw new GroupException(ACCOUNT_IN_GROUP);
-        }
+//        if (groupAccountRepository.findByGroupAndAccount(group, account) != null) {
+//            throw new GroupException(ACCOUNT_IN_GROUP);
+//        }
     }
 
     private String like(String value) {

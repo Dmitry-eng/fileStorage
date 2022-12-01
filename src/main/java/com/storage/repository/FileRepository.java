@@ -13,33 +13,28 @@ import java.util.List;
 
 @Repository
 public interface FileRepository extends JpaRepository<File, Long>, JpaSpecificationExecutor<Account> {
-    @Query("SELECT fg.file FROM FileGroup fg " +
-            "WHERE fg.group=:group")
+    @Query("SELECT g.files FROM Group g where g=:group")
     List<File> findAllByGroup(@Param(value = "group") Group group);
 
     List<File> findAllByAccount(Account account);
 
-    @Query("SELECT file FROM File file WHERE file.account=:account and (file.name like %:value% or" +
-            " file.info like %:value% or CAST(file.id as text) = :value)")
+    @Query("SELECT file FROM File file WHERE file.account=:account and (file.name like :value or file.info like :value)")
     List<File> findAllByAccount(@Param(value = "account") Account account, @Param(value = "value") String value);
 
     List<File> findAllByOpenTrueOrAccount(Account account);
 
-    @Query("SELECT file FROM File file " +
-            "left join FileGroup fg on fg.file=file " +
-            "left join GroupAccount ga on ga.group=fg.group " +
-            "WHERE file.open=true or file.account=:account or ga.account=:account")
-    List<File> findAll(@Param(value = "account") Account account);
+    //    @Query("SELECT file FROM File file where file.account=:account or file.open=true")
+    List<File> findAllByAccountOrOpenTrue(Account account);
 
-    @Query("SELECT file FROM File file WHERE file.name like %:value% or file.info like %:value% or CAST(file.id as text) like %:value%")
+    @Query("SELECT file FROM File file where (file.account=:account or file.open=true) and (file.name like :value or file.info like :value or file.account.login like :value)")
+    List<File> findAllByAccountAndValueContains(@Param("account") Account account, @Param(value = "value") String value);
+
+    @Query("SELECT file FROM File file WHERE file.name like :value or file.info like :value or file.account.login like :value")
     List<File> findAll(@Param(value = "value") String value);
 
-    @Query("SELECT file FROM File file " +
-            "inner join FileGroup fg on fg.file=file " +
-            "inner join GroupAccount ga on ga.group=fg.group  " +
-            "WHERE (file.open=true or file.account=:account or ga.account=:account) and (file.name like %:value% or " +
-            "file.info like %:value%  or   CAST(file.id as text) = :value)")
-    List<File> findAll(@Param(value = "account") Account account, @Param(value = "value") String value);
+
+    @Query("SELECT file FROM File file ")
+    List<File> findAllByAccountOrOpenTrue(@Param(value = "account") Account account, @Param(value = "value") String value);
 
     void deleteByAccount(Account account);
 }

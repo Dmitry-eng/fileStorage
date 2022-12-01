@@ -2,7 +2,7 @@ package com.storage.service.file;
 
 import com.storage.model.Account;
 import com.storage.model.File;
-import com.storage.model.FileGroup;
+//import com.storage.model.FileGroup;
 import com.storage.model.Group;
 import com.storage.repository.FileRepository;
 import com.storage.service.AccountSession;
@@ -30,6 +30,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class FileServiceImpl implements FileService {
+    private static final String LIKE = "%%%s%%";
     private static final String ON = "on";
     private static final Path root = Paths.get("uploads");
     private final FileRepository fileRepository;
@@ -39,12 +40,12 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public final List<File> search() {
-        return fileRepository.findAll(accountSession.getAccount());
+        return fileRepository.findAllByAccountOrOpenTrue(accountSession.getAccount());
     }
 
     @Override
     public final List<File> search(String value) {
-        return fileRepository.findAll(accountSession.getAccount(), value);
+        return fileRepository.findAllByAccountAndValueContains(accountSession.getAccount(), String.format(LIKE, value));
     }
 
     @Override
@@ -54,7 +55,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public final List<File> findFileByAccount(String value) {
-        return fileRepository.findAllByAccount(accountSession.getAccount(), value);
+        return fileRepository.findAllByAccount(accountSession.getAccount(), String.format(LIKE, value));
     }
 
     @Override
@@ -99,10 +100,10 @@ public class FileServiceImpl implements FileService {
         if (file.getOpen() || file.getAccount().equals(account) || accountSession.isAdmin()) {
             return;
         }
-        List<Group> groups = groupService.findAllGroupAccessForAccount();
-        if (file.getFileGroupsListEntity().stream().map(FileGroup::getGroup).noneMatch(groups::contains)) {
-            throw new SecurityException(Security.ACCESS_DENIED);
-        }
+//        file.getAccount().getActivated().booleanValue()
+//        if(account.getGroups().stream().map(Group::getFiles).noneMatch(files -> files.contains(file))) {
+//            throw new SecurityException(Security.ACCESS_DENIED);
+//        }
     }
 
     @SneakyThrows

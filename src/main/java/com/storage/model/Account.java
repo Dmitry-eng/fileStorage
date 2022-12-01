@@ -59,9 +59,9 @@ public class Account extends StandardEntity implements UserDetails {
     )
     private Set<Role> roles;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Group> groups;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Group> groups;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

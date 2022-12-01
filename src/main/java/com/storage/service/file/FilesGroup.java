@@ -11,11 +11,7 @@ import java.util.List;
 public interface FilesGroup {
     List<File> show(Long id, String text);
 
-    List<File> show(Long id);
-
     boolean leave(Long id);
-
-    boolean addFileGroup(Long fileId, Long groupId);
 
     List<Account> showAccountGroup(Long groupId);
 

@@ -1,5 +1,6 @@
 package com.storage.service.group;
 
+import com.storage.model.File;
 import com.storage.model.Group;
 import com.storage.model.Request;
 
@@ -29,4 +30,8 @@ public interface GroupService {
     void reject(Long id);
 
     void accept(Long id);
+
+    List<File> show(Long id);
+
+    void addFileGroup(Long fileId, Long groupId);
 }

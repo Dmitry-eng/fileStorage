@@ -3,14 +3,14 @@ package com.storage.service.file;
 
 import com.storage.model.Account;
 import com.storage.model.File;
-import com.storage.model.FileGroup;
+//import com.storage.model.FileGroup;
 import com.storage.model.Group;
-import com.storage.model.GroupAccount;
+//import com.storage.model.GroupAccount;
 import com.storage.repository.AccountRepository;
-import com.storage.repository.FileGroupRepository;
+//import com.storage.repository.FileGroupRepository;
 import com.storage.repository.FileRepository;
 import com.storage.repository.GroupRepository;
-import com.storage.repository.GroupAccountRepository;
+//import com.storage.repository.GroupAccountRepository;
 import com.storage.service.AccountSession;
 import com.storage.service.util.Util;
 import lombok.AllArgsConstructor;
@@ -21,21 +21,12 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class FilesGroupImpl implements FilesGroup {
-    private final GroupAccountRepository groupAccountRepository;
+//    private final GroupAccountRepository groupAccountRepository;
     private final AccountSession accountSession;
     private final GroupRepository groupRepository;
     private final FileRepository fileRepository;
-    private final FileGroupRepository fileGroupRepository;
+//    private final FileGroupRepository fileGroupRepository;
     private final AccountRepository accountRepository;
-
-    @Override
-    public List<File> show(Long id) {
-            Account account = accountSession.getAccount();
-            Group group = groupRepository.getOne(id);
-            if (!group.getAccount().equals(account)
-                    && groupAccountRepository.countByGroupAndAccount(group, account) == 0) return null;
-            return fileRepository.findAllByGroup(group);
-    }
 
     @Override
     public List<File> show(Long id, String text) {
@@ -57,21 +48,6 @@ public class FilesGroupImpl implements FilesGroup {
 //        return false;
     }
 
-    @Override
-    public final boolean addFileGroup(Long fileId, Long groupId) {
-        Group group = groupRepository.getOne(groupId);
-        Account account = accountSession.getAccount();
-        File file = fileRepository.getOne(fileId);
-        GroupAccount groupAccount = groupAccountRepository.findByGroupAndAccount(group, account);
-        if (group.getAccount().equals(account) || groupAccount != null) {
-            if (fileGroupRepository.findAllByFileAndGroup(file, group).size() != 0) return false;
-            FileGroup fileGroup = new FileGroup(file, group);
-            fileGroupRepository.save(fileGroup);
-            return true;
-        }
-        return false;
-    }
-
     public List<Account> showAccountGroup(Long groupId) {
        return accountRepository.pFindByGroupId(groupId);
     }
@@ -84,7 +60,7 @@ public class FilesGroupImpl implements FilesGroup {
         Group group = groupRepository.getOne(Long.parseLong(groupId));
         Account account = accountRepository.getOne(Long.parseLong(userId));
         if (group.getAccount().equals(accountSession.getAccount())) {
-            groupAccountRepository.deleteByGroupAndAccount(group, account);
+//            groupAccountRepository.deleteByGroupAndAccount(group, account);
             return true;
         }
         return false;
@@ -95,7 +71,7 @@ public class FilesGroupImpl implements FilesGroup {
         Group group = groupRepository.getOne(Long.parseLong(groupId));
         File file = fileRepository.getOne(Long.parseLong(fileId));
         if (group.getAccount().equals(accountSession.getAccount())) {
-            fileGroupRepository.deleteByFileAndGroup(file, group);
+//            fileGroupRepository.deleteByFileAndGroup(file, group);
             return true;
         }
         return false;

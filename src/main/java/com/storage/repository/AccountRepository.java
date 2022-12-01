@@ -20,6 +20,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Account findByLogin(String login);
 
-    @Query("SELECT ga.account FROM GroupAccount ga WHERE ga.group.id=:id")
+    @Query("SELECT a from Account a")
     List<Account> pFindByGroupId(@Param(value = "id") Long id);
 }

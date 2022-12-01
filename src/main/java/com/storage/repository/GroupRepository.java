@@ -11,12 +11,15 @@ import java.util.List;
 
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
-    @Query("SELECT g FROM  Group g LEFT join g.groupAccounts AS gul WHERE gul.account=:account or g.account=:account ")
+    List<Group> findAllByAccountsContaining(Account account);
+
+    @Query("SELECT g FROM  Group g  where g.account = :account or :account MEMBER g.accounts")
     List<Group> findAllGroupAccessForAccount(@Param(value = "account") Account account);
 
-    @Query("SELECT g FROM  Group g LEFT join g.groupAccounts AS gul WHERE (gul.account=:account or g.account=:account) and " +
-            "(g.account.login like  %:value% or g.name like %:value%  or CAST(g.id as text) = :value )")
+    @Query("SELECT g FROM  Group g  where (g.account = :account or :account MEMBER g.accounts) and " +
+            "(g.name like %:value% or g.account.login like  %:value%  or CAST(g.id as text) = :value)")
     List<Group> findAllGroupAccessForAccount(@Param(value = "account") Account account, @Param(value = "value") String value);
+
 
     @Query("SElECT g FROM Group g WHERE g.name like %:value% or g.account.login like  %:value%  or CAST(g.id as text) = :value")
     List<Group> findAll(@Param(value = "value") String value);

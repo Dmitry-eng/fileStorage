@@ -6,12 +6,7 @@ import com.storage.model.Group;
 import com.storage.service.file.FilesGroup;
 import com.storage.service.group.GroupService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +19,7 @@ public class RestShowGroup {
 
     @PutMapping("/{id}")
     public List<File> show(@PathVariable Long id) {
-        return filesGroup.show(id);
+        return groupService.show(id);
     }
 
     @PutMapping("/{id}/{text}")
@@ -43,8 +38,8 @@ public class RestShowGroup {
     }
 
     @PostMapping("/addFileGroup/{fileId}/{groupId}")
-    public boolean addFileGroup(@PathVariable Long fileId, @PathVariable Long groupId) {
-        return filesGroup.addFileGroup(fileId, groupId);
+    public void addFileGroup(@PathVariable Long fileId, @PathVariable Long groupId) {
+        groupService.addFileGroup(fileId, groupId);
     }
 
     @PutMapping("/AccountGroup/{groupId}")
